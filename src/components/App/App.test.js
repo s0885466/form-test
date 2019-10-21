@@ -1,6 +1,7 @@
 import React from 'react';
 import {shallow, mount, render} from 'enzyme';
 import App from "./App";
+import {validateConfirmPassword, validateEmail, validateName, validatePassword} from "./helpers";
 
 describe('Testing snapshop <App/>', () => {
     it('App have rendered correctly', () => {
@@ -27,4 +28,47 @@ describe('Testing handlers <App/>', () => {
         expect(app.state().values.name).toBe(event.target.value);
         expect(app.state().errors.name).toBe('Name must be more than 6 symbols')
     })
+});
+
+describe('testing submit button', () => {
+
+    it('button must not be disabled', () => {
+        const values = {
+            name: 'alinovskiy',
+            email: 'alinovskiy@mail.ru',
+            password: '111111',
+            confirmPassword: '111111',
+        };
+        const app = shallow(<App/>);
+        app.state().values = values;
+        app.instance().setSubmitDisabled();
+        expect(app.state().isSubmitDisables).toBeFalse();
+    });
+
+    it('button must be disabled 1', () => {
+        const values = {
+            name: 'alinovskiy',
+            email: 'alinovskiy@mail.ru',
+            password: '111111',
+            confirmPassword: '1',
+        };
+        const app = shallow(<App/>);
+        app.state().values = values;
+        app.instance().setSubmitDisabled();
+        expect(app.state().isSubmitDisables).toBeTrue();
+    });
+
+    it('button must be disabled 2', () => {
+        const values = {
+            name: 'sss',
+            email: 'alinovskiy@mail.ru',
+            password: '111111',
+            confirmPassword: '111111',
+        };
+
+        const app = shallow(<App/>);
+        app.state().values = values;
+        app.instance().setSubmitDisabled();
+        expect(app.state().isSubmitDisables).toBeTrue();
+    });
 });

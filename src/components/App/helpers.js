@@ -14,3 +14,9 @@ export function validatePassword(password) {
         ? 'Password must be more than 6 symbols'
         : ''
 }
+
+export function validateConfirmPassword(password, confirmPassword) {
+    return password !== confirmPassword
+        ? 'Password must be equal'
+        : ''
+}
